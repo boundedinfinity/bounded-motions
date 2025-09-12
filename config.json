@@ -1,0 +1,10 @@
+{
+    "source-dir": "/home/bbabb/Dropbox/statements",
+    "processed-dir": "/home/bbabb/Dropbox/processed",
+    "allowed-exts": [".txt", ".md", ".pdf", ".jpg", ".jpeg", ".png", ".gif"],
+    "labels": [
+        "Insurance", "State Farm",  
+        "Bank", "Chase Bank", 
+        "Statement"
+    ]
+}
