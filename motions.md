@@ -34,20 +34,36 @@
     │   └── l       focus window left
     ├── x           close window
     └── r
-        ├── a
-        │   ├── i   resize window larger
-        │   └── k   resize window smaller
-        ├── i
-        │   ├── i   move top of window up
-        │   └── k   move top of window down
-        ├── k
-        │   ├── i   move bottom of window up
-        │   └── k   move bottom of window down
-        ├── j
-        │   ├── j   move left of window left
-        │   └── l   move left of window right
-        └── l
-            ├── j   move right of window left
-            └── l   move right of window right
+    │   ├── a
+    │   │   ├── i   resize window larger
+    │   │   └── k   resize window smaller
+    │   ├── i
+    │   │   ├── i   move top of window up
+    │   │   └── k   move top of window down
+    │   ├── k
+    │   │   ├── i   move bottom of window up
+    │   │   └── k   move bottom of window down
+    │   ├── j
+    │   │   ├── j   move left of window left
+    │   │   └── l   move left of window right
+    │   └── l
+    │       ├── j   move right of window left
+    │       └── l   move right of window right
+    ├── e
+    │   ├── f       s
+    │   │   ├── e   focus on editor explorer
+    │   │   └── m   focus on editor main area
+    |   ├── o
+    │   │   ├── f   open a file
+    │   │   ├── d   open a directory
+    │   │   └── p   open a project
+    ├── s
+    │   ├── o              
+    │   │   ├── f   open a file (with default application)
+    │   │   ├── d   open a directory (with default application)
+    │   │   └── u   open a URL (with default browser)
+    │   ├── s              
+    │   │   ├── a   Open operating system information window (if exsists)
+    │   │   ├── n   Open operating system networking configuration
 
 ```
