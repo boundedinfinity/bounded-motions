@@ -1,6 +1,7 @@
 package breadcrumb
 
 import (
+	"fmt"
 	"go-motions/utils"
 	"strings"
 
@@ -9,16 +10,16 @@ import (
 )
 
 type Model struct {
-	items          []string
+	items          []fmt.Stringer
 	delimiter      string
 	itemStyle      lipgloss.Style
 	delimiterStyle lipgloss.Style
 	frameStyle     lipgloss.Style
 }
 
-func New() Model {
-	return Model{
-		items:          []string{},
+func New() *Model {
+	return &Model{
+		items:          []fmt.Stringer{},
 		delimiter:      ">",
 		itemStyle:      defaultItemStyle(),
 		delimiterStyle: defaultDelimterStyle(),
@@ -26,7 +27,7 @@ func New() Model {
 	}
 }
 
-func (this Model) Items(items ...string) Model {
+func (this Model) Items(items ...fmt.Stringer) Model {
 	return utils.SetAndReturn(this, &this.items, items)
 }
 
@@ -50,7 +51,7 @@ func (_ Model) Init() tea.Cmd {
 	return nil
 }
 
-func (this Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (this *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case BreadCrumbUpdateMessage:
 		this.items = msg.Items
@@ -63,7 +64,7 @@ func (this Model) View() string {
 	var items []string
 
 	for _, item := range this.items {
-		items = append(items, this.itemStyle.Render(item))
+		items = append(items, this.itemStyle.Render(item.String()))
 	}
 
 	delimiter := this.delimiterStyle.Render(this.delimiter)
@@ -73,7 +74,7 @@ func (this Model) View() string {
 
 // https://www.w3schools.com/colors/colors_picker.asp
 var (
-	_FG_COLOR = "#333399"
+	_FG_COLOR = "#d9d9e5ff"
 )
 
 func defaultItemStyle() lipgloss.Style {
@@ -81,7 +82,9 @@ func defaultItemStyle() lipgloss.Style {
 }
 
 func defaultDelimterStyle() lipgloss.Style {
-	return lipgloss.NewStyle().Foreground(lipgloss.Color(_FG_COLOR)).PaddingLeft(1).PaddingRight(1)
+	return lipgloss.NewStyle().
+		Foreground(lipgloss.Color(_FG_COLOR)).
+		PaddingLeft(1).PaddingRight(1)
 }
 
 func defaultFrameStyle() lipgloss.Style {

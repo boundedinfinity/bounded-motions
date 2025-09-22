@@ -1,21 +1,19 @@
 package breadcrumb
 
 import (
+	"fmt"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 type BreadCrumbUpdateMessage struct {
-	Items []string
+	Items []fmt.Stringer
 }
 
-func BreadCrumpUpdateCmd(items ...string) tea.Cmd {
+func BreadCrumpUpdateCmd(items ...fmt.Stringer) tea.Cmd {
 	return func() tea.Msg {
 		return BreadCrumbUpdateMessage{
 			Items: items,
 		}
 	}
-}
-
-func BreadCrumpClearCmd() tea.Cmd {
-	return BreadCrumpUpdateCmd()
 }

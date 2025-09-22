@@ -1,0 +1,441 @@
+{
+    "style": {
+        "navigation-box": {
+            "foreground-color": "#d9d9e5ff",
+            "padding": 2
+        },
+        "navigation-path": {
+            "padding": 2,
+            "margin": 2
+        },
+        "navigation-option": {
+            "padding": 2,
+            "margin": 2
+        }
+    },
+    "key-binding": {
+        "key": "",
+        "name": "Bounded Motions",
+        "children": [
+            {
+                "key": "w",
+                "name": "Window",
+                "children": [
+                    {
+                        "key": "c",
+                        "name": "Close",
+                        "children": [
+                            {
+                                "key": "<enter>",
+                                "name": "Close current window"
+                            },
+                            {
+                                "key": "a",
+                                "name": "Close all windows"
+                            },
+                            {
+                                "key": "s",
+                                "name": "Close all windows in current screen"
+                            },
+                            {
+                                "key": "w",
+                                "name": "Close all windows in current workspace"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "r",
+                        "name": "Resize window",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "Resize top",
+                                "children": [
+                                    {
+                                        "key": "i",
+                                        "name": "Move top up"
+                                    },
+                                    {
+                                        "key": "k",
+                                        "name": "Move top down"
+                                    },
+                                    {
+                                        "key": "q",
+                                        "name": "quit"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "k",
+                                "name": "Resize bottom",
+                                "children": [
+                                    {
+                                        "key": "i",
+                                        "name": "Move bottom up"
+                                    },
+                                    {
+                                        "key": "k",
+                                        "name": "Move bottom down"
+                                    },
+                                    {
+                                        "key": "q",
+                                        "name": "quit"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "j",
+                                "name": "Resize left",
+                                "children": [
+                                    {
+                                        "key": "j",
+                                        "name": "Move left left"
+                                    },
+                                    {
+                                        "key": "k",
+                                        "name": "Move left right"
+                                    },
+                                    {
+                                        "key": "q",
+                                        "name": "quit"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "l",
+                                "name": "Resize right",
+                                "children": [
+                                    {
+                                        "key": "j",
+                                        "name": "Move right left"
+                                    },
+                                    {
+                                        "key": "k",
+                                        "name": "Move right right"
+                                    },
+                                    {
+                                        "key": "q",
+                                        "name": "quit"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "key": "f",
+                        "name": "Focus",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "m",
+                        "name": "Move",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "w",
+                        "name": "Move window to workspace",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "s",
+                        "name": "Move window to screen",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "b",
+                "name": "Browser",
+                "children": [
+                    {
+                        "key": "s",
+                        "name": "Find in page",
+                        "children": [
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "t",
+                        "name": "Tab",
+                        "children": [
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "e",
+                "name": "Editor",
+                "expanded": true,
+                "children": [
+                    {
+                        "key": "s",
+                        "name": "Find",
+                        "children": [
+                            {
+                                "key": "d",
+                                "name": "Find in document"
+                            },
+                            {
+                                "key": "p",
+                                "name": "Find in project"
+                            },
+                            {
+                                "key": "<enter>",
+                                "name": "Perform search"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "p",
+                        "name": "Command palette"
+                    },
+                    {
+                        "key": "f",
+                        "name": "File",
+                        "children": [
+                            {
+                                "key": "s",
+                                "name": "Save document"
+                            },
+                            {
+                                "key": "o",
+                                "name": "Open document"
+                            },
+                            {
+                                "key": "r",
+                                "name": "Rename document"
+                            },
+                            {
+                                "key": "<enter>",
+                                "name": "Perform search"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "m",
+                        "name": "Move cursor in document",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "s",
+                        "name": "Select (or highlight) area in document",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "<enter>",
+                                "name": "Perform search"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "w",
+                        "name": "Move word in document",
+                        "children": [
+                            {
+                                "key": "i",
+                                "name": "up"
+                            },
+                            {
+                                "key": "k",
+                                "name": "down"
+                            },
+                            {
+                                "key": "j",
+                                "name": "left"
+                            },
+                            {
+                                "key": "l",
+                                "name": "right"
+                            },
+                            {
+                                "key": "b",
+                                "name": "beginning of word"
+                            },
+                            {
+                                "key": "e",
+                                "name": "end of word"
+                            },
+                            {
+                                "key": "<enter>",
+                                "name": "Perform search"
+                            },
+                            {
+                                "key": "q",
+                                "name": "Exit without performing search"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "n",
+                        "name": "Navigate",
+                        "children": [
+                            {
+                                "key": "j",
+                                "name": "Move back"
+                            },
+                            {
+                                "key": "l",
+                                "name": "Move forward"
+                            },
+                            {
+                                "key": "g",
+                                "name": "Go to line"
+                            },
+                            {
+                                "key": "f",
+                                "name": "Go to file"
+                            },
+                            {
+                                "key": "q",
+                                "name": "quit"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

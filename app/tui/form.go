@@ -1,17 +1,19 @@
-package main
+package tui
 
 import (
+	"go-motions/model"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-func newForm(config *config) form {
+func newForm(config *model.ConfigJson) form {
 	return form{
 		config: config,
 	}
 }
 
 type form struct {
-	config *config
+	config *model.ConfigJson
 	labels []string
 }
 

@@ -1,3 +1,7 @@
+# Reference
+- https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio
+- https://learn.omacom.io/2/the-omarchy-manual/53/hotkeys
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
