@@ -3,3 +3,6 @@ list:
 
 debug:
     dlv debug . --listen=:2345 --headless
+
+debug-cmd:
+    dlv debug ./cmd/bounded-motions/ --listen=:2345 --headless

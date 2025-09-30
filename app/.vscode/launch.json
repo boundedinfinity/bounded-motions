@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Connect to server",
+            "name": "remote debug",
             "type": "go",
             "request": "attach",
             "mode": "remote",
@@ -19,6 +19,13 @@
             "request": "launch",
             "mode": "auto",
             "program": "${fileDirname}"
+        },
+        {
+            "name": "go-motions",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/bounded-motions/"
         }
     ]
 }
