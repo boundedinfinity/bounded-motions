@@ -75,4 +75,27 @@ func init() {
 	newMotionCommand("editor.navigate.back", "e", "n", "j")
 	newMotionCommand("editor.navigate.forward", "e", "n", "l")
 	newMotionCommand("editor.navigate.end", "e", "n", "e")
+
+	newMotionCommand("window.pane.up", "w", "p", "i")
+	newMotionCommand("window.pane.down", "w", "p", "k")
+	newMotionCommand("window.pane.left", "w", "p", "j")
+	newMotionCommand("window.pane.right", "w", "p", "l")
+
+	newMotionCommand("editor.open.file", "e", "o", "f")
+	newMotionCommand("editor.open.terminal", "e", "o", "t")
+
+	newMotionCommand("editor.edit.undo", "e", "e", "u")
+	newMotionCommand("editor.edit.redo", "e", "e", "r")
+	newMotionCommand("editor.edit.copy", "e", "e", "c")
+	newMotionCommand("editor.edit.paste", "e", "e", "p")
+
+	newMotionCommand("editor.clipboard.show", "e", "c", "s")
+	newMotionCommand("editor.clipboard.remove", "e", "c", "r")
+	newMotionCommand("window.clipboard.backward", "w", "c", "j")
+	newMotionCommand("window.clipboard.forward", "w", "c", "l")
+
+	newMotionCommand("editor.find", "e", "f")
+	newMotionCommand("editor.select.next", "e", "s", "n")
+	newMotionCommand("window.select.all", "e", "s", "a")
+	newMotionCommand("window.select.clear", "e", "s", "c")
 }

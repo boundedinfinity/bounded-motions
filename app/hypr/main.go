@@ -88,7 +88,7 @@ Loop:
 		case <-ctx.Done():
 			break Loop
 		case err := <-this.errInCh:
-			this.ErrOutCh <- err
+			go func() { this.ErrOutCh <- err }()
 		case raw := <-this.eventInCh:
 			if event, err := events.Parse(raw); err != nil {
 				go func() { this.errInCh <- err }()
@@ -96,10 +96,11 @@ Loop:
 				go func() { this.EventOutCh <- event }()
 			}
 		case raw := <-this.commandRawCh:
+			fmt.Print(raw.Text)
 			if result, err := commands.ParseResult(raw.Command, raw.Text); err != nil {
 				go func() { this.errInCh <- err }()
 			} else {
-				this.CommandOutCh <- result
+				go func() { this.CommandOutCh <- result }()
 			}
 		case cmd := <-this.commandInCh:
 			if raw, err := this.writeCommand(cmd); err != nil {

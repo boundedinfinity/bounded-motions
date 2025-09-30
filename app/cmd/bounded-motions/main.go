@@ -47,15 +47,12 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		time.Sleep(10 * time.Second)
-		hserver.Write(&commands.Version{})
 		time.Sleep(2 * time.Second)
 		hserver.Write(&commands.Monitors{})
 	}()
 
 	wg.Add(1)
 	go func() {
-		time.Sleep(1 * time.Second)
 		defer wg.Done()
 		if err := hserver.Start(ctx); err != nil {
 			panic(err)

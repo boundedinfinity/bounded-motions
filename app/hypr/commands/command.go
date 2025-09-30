@@ -17,11 +17,6 @@ type HyprCommand interface {
 	hyprCommand() HyprCommandType // discriminator
 }
 
-type HyperCommandResult interface {
-	String() string
-	hyperCommandResult() // discriminator
-}
-
 func ParseResult(cmd HyprCommand, input string) (HyperCommandResult, error) {
 	var result HyperCommandResult
 	var err error
@@ -29,6 +24,8 @@ func ParseResult(cmd HyprCommand, input string) (HyperCommandResult, error) {
 	switch cmd.String() {
 	case string(HyprCommandTypes.Version):
 		result, err = parseVersion(input)
+	case string(HyprCommandTypes.Monitors):
+		result, err = parseMonitors(input)
 	}
 
 	return result, err
@@ -384,67 +381,6 @@ func (this Version) String() string {
 
 func (_ Version) hyprCommand() HyprCommandType {
 	return HyprCommandTypes.Version
-}
-
-var _ HyperCommandResult = &VersionResult{}
-
-type VersionResult struct {
-	Version      string
-	Commit       string
-	Branch       string
-	Date         string
-	Tag          string
-	Dependencies map[string]string
-	Flags        []string
-}
-
-func (this VersionResult) String() string {
-	return this.Version
-}
-
-func (_ VersionResult) hyperCommandResult() {}
-
-func parseVersion(input string) (*VersionResult, error) {
-	info := VersionResult{Dependencies: make(map[string]string)}
-	lines := strings.Split(input, "\n")
-
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-
-		if line == "" {
-			continue
-		}
-
-		if strings.HasPrefix("Hyprland", line) {
-			parts := strings.Split(line, "built from")
-
-			info.Version = parts[0]
-			info.Version = strings.ReplaceAll(info.Version, "Hyperland", "")
-			info.Version = strings.TrimSpace(info.Version)
-
-			parts = strings.Split(parts[1], "(version:")
-			info.Commit = parts[0]
-			info.Commit = strings.ReplaceAll(info.Commit, "commit", "")
-			info.Commit = strings.TrimSpace(info.Commit)
-
-			continue
-		}
-
-		if strings.HasPrefix(line, "Date:") {
-			info.Date = line
-			info.Date = strings.ReplaceAll(info.Date, "Date:", "")
-			info.Date = strings.TrimSpace(info.Date)
-			continue
-		}
-
-		if strings.HasPrefix(line, "Tag:") {
-			info.Tag = strings.ReplaceAll(line, "Tag:", "")
-			info.Tag = strings.TrimSpace(info.Tag)
-			continue
-		}
-	}
-
-	return &info, nil
 }
 
 // /////////////////////////////////////////////////////////////////////////////

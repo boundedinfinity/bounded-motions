@@ -39,19 +39,10 @@ type SizeInPixel struct {
 	Height int
 }
 
-type MonitorsResult struct {
-	Monitors []MonitorResult
-}
+type MonitorResult2 struct {
+	Name string
+	Id   int
 
-type MonitorResult struct {
-	Name             string
-	Id               int
-	Resolution       string
-	RefreshRate      string
-	Position         string
-	Description      string
-	Make             string
-	Model            string
 	PhysicalSizeMM   SizeInPixel
 	Serial           string
 	ActiveWorkspace  string
@@ -75,93 +66,6 @@ type MonitorResult struct {
 }
 
 var monitorHeaderRegex = regexp.MustCompile(`Monitor\s+([^\s]+)\s+\(ID\s+(\d+)\):`)
-
-// ParseMonitor parses the block of text into a Monitor struct
-func ParseMonitor(input string) (*MonitorResult, error) {
-	monitor := &MonitorResult{}
-
-	if m := monitorHeaderRegex.FindStringSubmatch(input); m != nil {
-		monitor.Name = m[1]
-		monitor.Id = atoiSafe(m[2])
-	}
-
-	lines := strings.Split(input, "\n")
-
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-
-		switch {
-		case strings.HasPrefix(line, "description:"):
-			monitor.Description = strings.TrimPrefix(line, "description: ")
-		case strings.HasPrefix(line, "make:"):
-			monitor.Make = strings.TrimPrefix(line, "make: ")
-		case strings.HasPrefix(line, "model:"):
-			monitor.Model = strings.TrimPrefix(line, "model: ")
-		case strings.HasPrefix(line, "physical size (mm):"):
-			val := strings.TrimPrefix(line, "physical size (mm): ")
-			parts := strings.Split(val, "x")
-			if len(parts) == 2 {
-				w, _ := strconv.Atoi(parts[0])
-				h, _ := strconv.Atoi(parts[1])
-				monitor.PhysicalSizeMM = SizeInPixel{Width: w, Height: h}
-			}
-		case strings.HasPrefix(line, "serial:"):
-			monitor.Serial = strings.TrimPrefix(line, "serial: ")
-		case strings.HasPrefix(line, "active workspace:"):
-			monitor.ActiveWorkspace = strings.TrimPrefix(line, "active workspace: ")
-		case strings.HasPrefix(line, "special workspace:"):
-			monitor.SpecialWorkspace = strings.TrimPrefix(line, "special workspace: ")
-		case strings.HasPrefix(line, "reserved:"):
-			monitor.Reserved = strings.TrimPrefix(line, "reserved: ")
-		case strings.HasPrefix(line, "scale:"):
-			monitor.Scale = strings.TrimPrefix(line, "scale: ")
-		case strings.HasPrefix(line, "transform:"):
-			val := strings.TrimPrefix(line, "transform: ")
-			num, _ := strconv.Atoi(val)
-			monitor.Transform = num != 0
-		case strings.HasPrefix(line, "focused:"):
-			val := strings.TrimPrefix(line, "focused: ")
-			monitor.Focused = val == "yes"
-		case strings.HasPrefix(line, "dpmsStatus:"):
-			monitor.DpmsStatus = strings.TrimPrefix(line, "dpmsStatus: ")
-		case strings.HasPrefix(line, "vrr:"):
-			val := strings.TrimPrefix(line, "vrr: ")
-			monitor.Vrr = val == "true"
-		case strings.HasPrefix(line, "solitary:"):
-			monitor.Solitary = strings.TrimPrefix(line, "solitary: ")
-		case strings.HasPrefix(line, "solitaryBlockedBy:"):
-			monitor.SolitaryBlocked = strings.TrimPrefix(line, "solitaryBlockedBy: ")
-		case strings.HasPrefix(line, "activelyTearing:"):
-			val := strings.TrimPrefix(line, "activelyTearing: ")
-			monitor.ActivelyTearing = val == "true"
-		case strings.HasPrefix(line, "tearingBlockedBy:"):
-			monitor.TearingBlocked = strings.TrimPrefix(line, "tearingBlockedBy: ")
-		case strings.HasPrefix(line, "directScanoutTo:"):
-			monitor.DirectScanoutTo = strings.TrimPrefix(line, "directScanoutTo: ")
-		case strings.HasPrefix(line, "directScanoutBlockedBy:"):
-			monitor.DirectScanoutBlk = strings.TrimPrefix(line, "directScanoutBlockedBy: ")
-		case strings.HasPrefix(line, "disabled:"):
-			monitor.Disabled = strings.TrimPrefix(line, "disabled: ")
-		case strings.HasPrefix(line, "currentFormat:"):
-			monitor.CurrentFormat = strings.TrimPrefix(line, "currentFormat: ")
-		case strings.HasPrefix(line, "mirrorOf:"):
-			monitor.MirrorOf = strings.TrimPrefix(line, "mirrorOf: ")
-		case strings.HasPrefix(line, "availableModes:"):
-			modes := strings.TrimPrefix(line, "availableModes: ")
-			monitor.AvailableModes = strings.Fields(modes)
-		default:
-			// Resolution line
-			reRes := regexp.MustCompile(`^(\d+x\d+)@([\d.]+)\s+at\s+(\S+)$`)
-			if m := reRes.FindStringSubmatch(line); m != nil {
-				monitor.Resolution = m[1]
-				monitor.RefreshRate = m[2]
-				monitor.Position = m[3]
-			}
-		}
-	}
-
-	return monitor, nil
-}
 
 func atoiSafe(s string) int {
 	var v int
