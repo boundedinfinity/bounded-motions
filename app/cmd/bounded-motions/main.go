@@ -7,7 +7,6 @@ import (
 	"os/signal"
 	"sync"
 	"syscall"
-	"time"
 
 	"go-motions/hypr"
 	"go-motions/hypr/commands"
@@ -47,8 +46,11 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		time.Sleep(2 * time.Second)
+		hserver.Write(&commands.Workspaces{})
 		hserver.Write(&commands.Monitors{})
+		hserver.Write(&commands.Version{})
+		hserver.Write(&commands.ActiveWorkspace{})
+		hserver.Write(&commands.ActiveWindow{})
 	}()
 
 	wg.Add(1)

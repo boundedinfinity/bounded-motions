@@ -1,7 +1,6 @@
 package commands_test
 
 import (
-	"fmt"
 	"go-motions/hypr/commands"
 	"testing"
 )
@@ -31,32 +30,95 @@ func TestCommand(t *testing.T) {
 }
 
 func TestParseMonitors(t *testing.T) {
-	result, err := commands.ParseResult(commands.Monitors{}, `Monitor HDMI-A-1 (ID 0):
-3840x2160@60.00000 at 0x-2160
-description: Samsung Electric Company LF32TU87 HCPR601907
-make: Samsung Electric Company
-model: LF32TU87
-physical size (mm): 700x400
-serial: HCPR601907
-active workspace: 1 (1)
-special workspace: 0 ()
-reserved: 0 26 0 0
-scale: 1.00
-transform: 0
-focused: no
-dpmsStatus: 1
-vrr: false
-solitary: 0
-solitaryBlockedBy: windowed mode,missing candidate
-activelyTearing: false
-tearingBlockedBy: next frame is not torn,user settings,missing candidate
-directScanoutTo: 0
-directScanoutBlockedBy: user settings,missing candidate
-disabled: false
-currentFormat: XRGB8888
-mirrorOf: none
-availableModes: 3840x2160@60.00Hz 3840x2160@60.00Hz 3840x2160@59.94Hz 3840x2160@50.00Hz 3840x2160@30.00Hz 3840x2160@30.00Hz 3840x2160@29.97Hz 1920x1200@60.00Hz 1920x1080@60.00Hz 1920x1080@60.00Hz 1920x1080@59.94Hz 1920x1080@50.00Hz 1920x1080@50.00Hz 1600x1200@60.00Hz 1680x1050@59.88Hz 1600x900@60.00Hz 1280x1024@75.03Hz 1280x1024@60.02Hz 1440x900@59.90Hz 1280x800@59.91Hz 1152x864@75.00Hz 1280x720@60.00Hz 1280x720@60.00Hz 1280x720@59.94Hz 1280x720@50.00Hz 1024x768@75.03Hz 1024x768@70.07Hz 1024x768@60.00Hz 832x624@74.55Hz 800x600@75.00Hz 800x600@72.19Hz 800x600@60.32Hz 800x600@56.25Hz 720x576@50.00Hz 720x480@60.00Hz 720x480@59.94Hz 640x480@75.00Hz 640x480@72.81Hz 640x480@66.67Hz 640x480@60.00Hz 640x480@59.94Hz 720x400@70.08Hz`)
-
-	fmt.Print(result)
-	fmt.Print(err)
+	commands.ParseResult(commands.Workspaces{}, workspacesTxt)
+	commands.ParseResult(commands.Monitors{}, monitorsTxt)
+	commands.ParseResult(commands.Version{}, versionTxt)
 }
+
+var (
+	workspacesTxt = `workspace ID 1 (1) on monitor HDMI-A-1:
+	monitorID: 0
+	windows: 2
+	hasfullscreen: 0
+	lastwindow: 0x55ad20c43f70
+	lastwindowtitle: ● EOF • Untitled-1 - bounded-motions - Code - OSS
+	ispersistent: 0
+workspace ID 2 (2) on monitor HDMI-A-2:
+	monitorID: 1
+	windows: 3
+	thasfullscreen: 0
+	lastwindow: 0x55ad20a3f920
+	lastwindowtitle: result.go - app - Code - OSS
+	ispersistent: 0
+workspace ID 4 (4) on monitor HDMI-A-2:
+	monitorID: 1
+	windows: 1
+	hasfullscreen: 0
+	lastwindow: 0x55ad20ab9100
+	lastwindowtitle: Code - OSS
+	ispersistent: 0
+`
+	versionTxt = `Hyprland 0.51.0 built from branch  at commit 46174f78b374b6cea669c48880877a8bdcf7802f  (version: bump to 0.51.0).
+Date: Wed Sep 10 12:41:05 2025
+Tag: v0.51.0, commits: 6418
+built against:
+ aquamarine 0.9.4
+ hyprlang 0.6.3
+ hyprutils 0.8.4
+ hyprcursor 0.1.13
+ hyprgraphics 0.1.5
+
+no flags were set
+`
+	monitorsTxt = `Monitor HDMI-A-1 (ID 0):
+	3840x2160@60.00000 at 0x-2160
+	description: Samsung Electric Company LF32TU87 HCPR601907
+	make: Samsung Electric Company
+	model: LF32TU87
+	physical size (mm): 700x400
+	serial: HCPR601907
+	active workspace: 1 (1)
+	special workspace: 0 ()
+	reserved: 0 26 0 0
+	scale: 1.00
+	transform: 0
+	focused: no
+	dpmsStatus: 1
+	vrr: false
+	solitary: 0
+	solitaryBlockedBy: windowed mode,missing candidate
+	activelyTearing: false
+	tearingBlockedBy: next frame is not torn,user settings,missing candidate
+	directScanoutTo: 0
+	directScanoutBlockedBy: user settings,missing candidate
+	disabled: false
+	currentFormat: XRGB8888
+	mirrorOf: none
+	availableModes: 3840x2160@60.00Hz 3840x2160@60.00Hz 3840x2160@59.94Hz 3840x2160@50.00Hz 3840x2160@30.00Hz 3840x2160@30.00Hz 3840x2160@29.97Hz 1920x1200@60.00Hz 1920x1080@60.00Hz 1920x1080@60.00Hz 1920x1080@59.94Hz 1920x1080@50.00Hz 1920x1080@50.00Hz 1600x1200@60.00Hz 1680x1050@59.88Hz 1600x900@60.00Hz 1280x1024@75.03Hz 1280x1024@60.02Hz 1440x900@59.90Hz 1280x800@59.91Hz 1152x864@75.00Hz 1280x720@60.00Hz 1280x720@60.00Hz 1280x720@59.94Hz 1280x720@50.00Hz 1024x768@75.03Hz 1024x768@70.07Hz 1024x768@60.00Hz 832x624@74.55Hz 800x600@75.00Hz 800x600@72.19Hz 800x600@60.32Hz 800x600@56.25Hz 720x576@50.00Hz 720x480@60.00Hz 720x480@59.94Hz 640x480@75.00Hz 640x480@72.81Hz 640x480@66.67Hz 640x480@60.00Hz 640x480@59.94Hz 720x400@70.08Hz
+Monitor HDMI-A-1 (ID 0):
+	3840x2160@60.00000 at 0x-2160
+	description: Samsung Electric Company LF32TU87 HCPR601907
+	make: Samsung Electric Company
+	model: LF32TU87
+	physical size (mm): 700x400
+	serial: HCPR601907
+	active workspace: 1 (1)
+	special workspace: 0 ()
+	reserved: 0 26 0 0
+	scale: 1.00
+	transform: 0
+	focused: no
+	dpmsStatus: 1
+	vrr: false
+	solitary: 0
+	solitaryBlockedBy: windowed mode,missing candidate
+	activelyTearing: false
+	tearingBlockedBy: next frame is not torn,user settings,missing candidate
+	directScanoutTo: 0
+	directScanoutBlockedBy: user settings,missing candidate
+	disabled: false
+	currentFormat: XRGB8888
+	mirrorOf: none
+	availableModes: 3840x2160@60.00Hz 3840x2160@60.00Hz 3840x2160@59.94Hz 3840x2160@50.00Hz 3840x2160@30.00Hz 3840x2160@30.00Hz 3840x2160@29.97Hz 1920x1200@60.00Hz 1920x1080@60.00Hz 1920x1080@60.00Hz 1920x1080@59.94Hz 1920x1080@50.00Hz 1920x1080@50.00Hz 1600x1200@60.00Hz 1680x1050@59.88Hz 1600x900@60.00Hz 1280x1024@75.03Hz 1280x1024@60.02Hz 1440x900@59.90Hz 1280x800@59.91Hz 1152x864@75.00Hz 1280x720@60.00Hz 1280x720@60.00Hz 1280x720@59.94Hz 1280x720@50.00Hz 1024x768@75.03Hz 1024x768@70.07Hz 1024x768@60.00Hz 832x624@74.55Hz 800x600@75.00Hz 800x600@72.19Hz 800x600@60.32Hz 800x600@56.25Hz 720x576@50.00Hz 720x480@60.00Hz 720x480@59.94Hz 640x480@75.00Hz 640x480@72.81Hz 640x480@66.67Hz 640x480@60.00Hz 640x480@59.94Hz 720x400@70.08Hz
+`
+)

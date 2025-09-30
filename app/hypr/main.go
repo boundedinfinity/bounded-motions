@@ -96,7 +96,6 @@ Loop:
 				go func() { this.EventOutCh <- event }()
 			}
 		case raw := <-this.commandRawCh:
-			fmt.Print(raw.Text)
 			if result, err := commands.ParseResult(raw.Command, raw.Text); err != nil {
 				go func() { this.errInCh <- err }()
 			} else {

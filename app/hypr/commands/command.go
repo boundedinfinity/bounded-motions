@@ -26,6 +26,10 @@ func ParseResult(cmd HyprCommand, input string) (HyperCommandResult, error) {
 		result, err = parseVersion(input)
 	case string(HyprCommandTypes.Monitors):
 		result, err = parseMonitors(input)
+	case string(HyprCommandTypes.Workspaces):
+		result, err = parseWorkspaces(input)
+	default:
+		fmt.Printf("Unsupported result: %s[%s]", cmd, input)
 	}
 
 	return result, err
