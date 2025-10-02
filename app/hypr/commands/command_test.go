@@ -36,6 +36,33 @@ func TestParseMonitors(t *testing.T) {
 }
 
 var (
+	activeWindowTxt = `Window 55ad20a3f920 -> command.go - app - Code - OSS:
+	mapped: 1
+	hidden: 0
+	at: 12,38
+	size: 2093,2110
+	workspace: 2 (2)
+	floating: 0
+	pseudo: 0
+	monitor: 1
+	class: code-oss
+	title: command.go - app - Code - OSS
+	initialClass: code-oss
+	initialTitle: Code - OSS
+	pid: 136181
+	xwayland: 0
+	pinned: 0
+	fullscreen: 0
+	fullscreenClient: 0
+	grouped: 0
+	tags: 
+	swallowing: 0
+	focusHistoryID: 0
+	inhibitingIdle: 0
+	xdgTag: 
+	xdgDescription: 
+	
+`
 	workspacesTxt = `workspace ID 1 (1) on monitor HDMI-A-1:
 	monitorID: 0
 	windows: 2

@@ -51,6 +51,7 @@ func main() {
 		hserver.Write(&commands.Version{})
 		hserver.Write(&commands.ActiveWorkspace{})
 		hserver.Write(&commands.ActiveWindow{})
+		hserver.Write(&commands.Exec{Command: "open /tmp"})
 	}()
 
 	wg.Add(1)

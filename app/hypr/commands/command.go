@@ -9,7 +9,6 @@ import (
 
 	"strconv"
 	"strings"
-	"time"
 )
 
 type HyprCommand interface {
@@ -22,10 +21,18 @@ func ParseResult(cmd HyprCommand, input string) (HyperCommandResult, error) {
 	var err error
 
 	switch cmd.String() {
-	case string(HyprCommandTypes.Version):
-		result, err = parseVersion(input)
+	case string(HyprCommandTypes.ActiveWindow):
+		result, err = parseActiveWindow(input, 0)
+	case string(HyprCommandTypes.ActiveWorkspace):
+		result, err = parseActiveWorkspace(input)
+	case string(HyprCommandTypes.Exec):
+		result, err = parseExec(input, 0)
+	case string(HyprCommandTypes.Execr):
+		result, err = parserExec(input, 0)
 	case string(HyprCommandTypes.Monitors):
 		result, err = parseMonitors(input)
+	case string(HyprCommandTypes.Version):
+		result, err = parseVersion(input)
 	case string(HyprCommandTypes.Workspaces):
 		result, err = parseWorkspaces(input)
 	default:
@@ -166,9 +173,9 @@ type hyprCommandTypes struct {
 	Descriptions                   HyprCommandType
 	Submap                         HyprCommandType
 	Keyword                        HyprCommandType
-	reload                         HyprCommandType
+	Reload                         HyprCommandType
 	Kill                           HyprCommandType
-	setcursor                      HyprCommandType
+	SetCursor                      HyprCommandType
 	Output                         HyprCommandType
 	SwitchXkbLayout                HyprCommandType
 	SetError                       HyprCommandType
@@ -239,336 +246,6 @@ type hyprCommandTypes struct {
 	Event                          HyprCommandType
 	SetProp                        HyprCommandType
 	ToggleSwallow                  HyprCommandType
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#reload
-
-var _ HyprCommand = &Reload{}
-
-type Reload struct {
-	Command string
-}
-
-func (this Reload) String() string {
-	return "reload"
-}
-
-func (_ Reload) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Version
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#kill
-
-var _ HyprCommand = &Kill{}
-
-type Kill struct {
-	Command string
-}
-
-func (this Kill) String() string {
-	return "kill"
-}
-
-func (_ Kill) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Kill
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#setcursor
-
-var _ HyprCommand = &SetCursor{}
-
-type SetCursor struct {
-	Fontname string
-	Size     int
-}
-
-func (this SetCursor) String() string {
-	return fmt.Sprintf("setcursor %s %d", this.Fontname, this.Size)
-}
-
-func (_ SetCursor) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.SetError
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#switchxkblayout
-
-var _ HyprCommand = &SwitchXkbLayout{}
-
-type SwitchXkbLayout struct {
-	Device  string
-	Command string
-}
-
-func (this SwitchXkbLayout) String() string {
-	return fmt.Sprintf("switchxkblayout %s %s", this.Device, this.Command)
-}
-
-func (_ SwitchXkbLayout) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.SwitchXkbLayout
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#seterror
-
-var _ HyprCommand = &SetError{}
-
-type SetError struct {
-	Err     error
-	Disable bool
-}
-
-func (this SetError) String() string {
-	if this.Disable {
-		return "seterror disabled"
-	}
-
-	return fmt.Sprintf("seterror %s", this.Err)
-}
-
-func (_ SetError) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.SetError
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#notify
-
-var _ HyprCommand = &Notify{}
-
-type Notify struct {
-	Icon     model.HyprNotifyIcon
-	Duration time.Duration
-	Color    string
-	Message  string
-}
-
-func (this Notify) String() string {
-	return fmt.Sprintf("notify %s %d %s %s", this.Icon, this.Duration.Milliseconds(), this.Color, this.Message)
-}
-
-func (_ Notify) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Notify
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#notify
-
-var _ HyprCommand = &DismissNotify{}
-
-type DismissNotify struct {
-	Count int
-}
-
-func (this DismissNotify) String() string {
-	return fmt.Sprintf("dismissnotify %d", this.Count)
-}
-
-func (_ DismissNotify) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.DismissNotify
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-// Info
-// /////////////////////////////////////////////////////////////////////////////
-// https://wiki.hypr.land/Configuring/Using-hyprctl/#info
-
-var _ HyprCommand = &Version{}
-
-type Version struct{}
-
-func (this Version) String() string {
-	return "version"
-}
-
-func (_ Version) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Version
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Monitors{}
-
-type Monitors struct{}
-
-func (this Monitors) String() string {
-	return "monitors"
-}
-
-func (_ Monitors) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Monitors
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Monitors{}
-
-type Workspaces struct{}
-
-func (this Workspaces) String() string {
-	return "workspaces"
-}
-
-func (_ Workspaces) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Workspaces
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &ActiveWorkspace{}
-
-type ActiveWorkspace struct{}
-
-func (this ActiveWorkspace) String() string {
-	return "activeworkspace"
-}
-
-func (_ ActiveWorkspace) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.ActiveWorkspace
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &WorkspaceRules{}
-
-type WorkspaceRules struct{}
-
-func (this WorkspaceRules) String() string {
-	return "workspacerules"
-}
-
-func (_ WorkspaceRules) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.WorkspaceRules
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Clients{}
-
-type Clients struct{}
-
-func (this Clients) String() string {
-	return "clients"
-}
-
-func (_ Clients) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Clients
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Devices{}
-
-type Devices struct{}
-
-func (this Devices) String() string {
-	return "devices"
-}
-
-func (_ Devices) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Devices
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Decorations{}
-
-type Decorations struct {
-	Window model.HyprWindowId
-}
-
-func (this Decorations) String() string {
-	return fmt.Sprintf("decorations %s", this.Window)
-}
-
-func (_ Decorations) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Decorations
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Binds{}
-
-type Binds struct{}
-
-func (this Binds) String() string {
-	return "binds"
-}
-
-func (_ Binds) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Binds
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &ActiveWindow{}
-
-type ActiveWindow struct{}
-
-func (this ActiveWindow) String() string {
-	return "activewindow"
-}
-
-func (_ ActiveWindow) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.ActiveWindow
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Layers{}
-
-type Layers struct{}
-
-func (this Layers) String() string {
-	return "layers"
-}
-
-func (_ Layers) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Layers
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Splash{}
-
-type Splash struct{}
-
-func (this Splash) String() string {
-	return "splash"
-}
-
-func (_ Splash) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Splash
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &CursorPos{}
-
-type CursorPos struct{}
-
-func (this CursorPos) String() string {
-	return "cursorpos"
-}
-
-func (_ CursorPos) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.CursorPos
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Animations{}
-
-type Animations struct{}
-
-func (this Animations) String() string {
-	return "animations"
-}
-
-func (_ Animations) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Animations
 }
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -679,38 +356,6 @@ func (_ Submap) hyprCommand() HyprCommandType {
 // https://wiki.hypr.land/Configuring/Using-hyprctl/#dispatch
 // https://wiki.hypr.land/Configuring/Dispatchers/
 //
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Exec{}
-
-type Exec struct {
-	Command string
-}
-
-func (this Exec) String() string {
-	return fmt.Sprintf("dispatch command %s", this.Command)
-}
-
-func (_ Exec) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Exec
-}
-
-// /////////////////////////////////////////////////////////////////////////////
-
-var _ HyprCommand = &Execr{}
-
-type Execr struct {
-	Command string
-}
-
-func (this Execr) String() string {
-	return fmt.Sprintf("dispatch command %s", this.Command)
-}
-
-func (_ Execr) hyprCommand() HyprCommandType {
-	return HyprCommandTypes.Execr
-}
-
 // /////////////////////////////////////////////////////////////////////////////
 
 var _ HyprCommand = &Pass{}
